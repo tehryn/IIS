@@ -1,0 +1,219 @@
+body {
+    background: #eee url('https://i.imgur.com/eeQeRmk.png'); /* https://subtlepatterns.com/weave/ */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    padding: 22px 10px;
+}
+
+a {
+    text-decoration: none;
+}
+
+#wrapper {
+/*    display: block;*/
+    min-width: 450px;
+    background: #fff;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 0;
+    box-shadow: 2px 2px 3px -1px rgba(0,0,0,0.35);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+h4 {
+    margin-bottom: 5px;
+}
+.ok {
+    background-color: #90ff6f;
+    color: #000;
+    border-radius: 5px;
+    padding: 5px;
+}
+.warning {
+    background-color: #FF946F;
+    color: #000;
+    border-radius: 5px;
+    padding: 5px;
+}
+.error {
+    background-color: #FF7748;
+    color: #000;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* ----- HEADER ----- */
+#header {
+    margin: 0px -20px;
+    padding: 0 10px;
+    background-color: #B40000;
+    border-radius: 5px 5px 0 0;
+}
+
+#header_box {
+    padding: 0 10px;
+}
+
+    #header_box #logo {
+        display: inline-block;
+        margin-right: 20px;
+    }
+        #header_box h1 {
+            margin: 0;
+
+        }
+        #header_box #logo a {
+            height: 90px;
+            width: 87px;
+            margin: 10px 0;
+            display: inline-block;
+            background-image: url(../../pictures/company_logo.png);
+            background-size: contain;
+        }
+
+        #header_box #logo span {
+        	visibility: hidden;
+        }
+
+    #header_box h2 {
+        display: inline-block;
+        font-weight: 700;
+        color: #fff;
+    }
+
+#menu_wrapper {
+    padding: 10px;
+    margin: 0 -10px;
+    text-align: right;
+    background-color: #C12200;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+    #menu_wrapper a {
+        font-weight: 700;
+        padding: 15px;
+        color: #fff;
+    }
+    #menu_wrapper a:hover {
+        color: #FF947E;
+    }
+    #menu_wrapper .sep {
+        display: none;
+    }
+
+
+/* ----- LOGIN ----- */
+.login {
+    text-align: center;
+}
+    .login table {
+        margin: 10px auto;
+        text-align: center;
+    }
+    #userinfo .jmeno_prijmeni {
+        font-weight: 700;
+    }
+/* ----- TLACITKA ----- */
+.button, button, input[type="button"], input[type="submit"] {
+    display: inline-block;
+	padding: 10px 20px;
+	min-width: 100px;
+	line-height: 44px - 22px;
+	border: 1px solid #df3838;
+	border-radius: 5px;
+	text-align: center;
+	font-size: 1.1rem;
+    margin: 20px;
+
+    color: #fff;
+    background: #df3838;
+}
+    .button:hover, input[type="button"]:hover, input[type="submit"]:hover {
+        text-decoration: none;
+        color: #fff;
+        background: #db2020;
+    }
+
+/* ----- TABLES ----- */
+table {
+    margin-bottom: 10px;
+/*    min-width: 600px;*/
+}
+
+td:first-child {
+    padding-right: 20px;
+}
+
+.center {
+    text-align: center;
+}
+/* ----- INPUTY ----- */
+input:not([type='submit']), textarea {
+    border-radius: 2px;
+    border: 1px solid #fc7777;
+    height: 20px;
+    padding: 3px;
+    margin: 5px;
+}
+
+    input:not([type='submit']):focus {
+        border: 1px solid #f11f1f;
+        box-shadow: 0 0 7px 0 rgba(241, 31, 31, 0.5);
+    }
+    textarea {
+        height: 60px;
+    }
+
+.required {
+    box-shadow: 0 0 1px 0 rgba(217, 31, 31, 0.86);
+    background-color: #fbee81;
+}
+/* ----- UNIVERZALNI OHRANICENA TABULKA ----- */
+.ohranicena_tabulka {
+    display: block;
+    border-collapse: collapse;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+    .ohranicena_tabulka thead {
+        border: 2px solid black;
+        background-color: #f11f1f;
+    }
+
+        .ohranicena_tabulka thead td {
+            font-weight: 700;
+            text-align: center;
+        }
+        .ohranicena_tabulka thead th {
+            font-weight: 700;
+            text-align: center;
+        }
+    .ohranicena_tabulka tbody tr {
+        background-color: #fff;
+    }
+    .ohranicena_tabulka tbody tr:nth-child(2n) {
+        background-color: rgb(255, 222, 217);
+    }
+    .ohranicena_tabulka tbody tr:hover {
+        background-color: rgb(246, 95, 73);
+    }
+    .ohranicena_tabulka td {
+        border: 2px solid black;
+        padding: 10px;
+    }
+    .ohranicena_tabulka a {
+        margin: 0 auto;
+    }
+        .ohranicena_tabulka a img {
+            width: 30px;
+            height: 30px;
+        }
+
+/* ----- UNIVERZALNI NEOHRANICENA TABULKA ----- */
+.neohranicena_tabulka {
+    margin-bottom: 10px;
+    border: 0;
+}
+    .neohranicena_tabulka td:first-child {
+        padding-right: 20px;
+    }
