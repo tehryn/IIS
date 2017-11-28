@@ -83,19 +83,30 @@
 			}
 			if ( $data_zamestnance && mysql_num_rows( $data_zamestnance ) > 0 ) {
 				$row = mysql_fetch_assoc( $data_zamestnance );
-				$adresa = $row['ulice'].' '.$row['cislo_popisne'].', '.$row['psc'].' '.$row['mesto'];
+				$adresa = "";
+				if ( $row['ulice'] && $row['cislo_popisne'] && $row['psc'] && $row['mesto'] ) {
+					$adresa = $row['ulice'].' '.$row['cislo_popisne'].', '.$row['psc'].' '.$row['mesto'];
+				}
+				else {
+					$adresa .= '<table class="neohranicena_tabulka"><tbody>';
+					$adresa .= '<tr><td>Ulice:</td><td>'.($row['ulice'] ? $row['ulice'] : 'neuvedeno').'</td></tr>';
+					$adresa .= '<tr><td>Číslo popisné:</td><td>'.($row['cislo_popisne'] ? $row['cislo_popisne'] : 'neuvedeno').'</td></tr>';
+					$adresa .= '<tr><td>PSČ:</td><td>'.($row['psc'] ? $row['psc'] : 'neuvedeno').'</td></tr>';
+					$adresa .= '<tr><td>Město:</td><td>'.($row['mesto'] ? $row['mesto'] : 'neuvedeno').'</td></tr>';
+					$adresa .= '</tbody></table>';
+				}
 				echo '<form method="post"><table class="neohranicena_tabulka"><tbody>';
 				echo '<tr><td>Jméno:</td><td>'.$row['jmeno'].'</td></tr>';
 				echo '<tr><td>Příjmení:</td><td>'.$row['prijmeni'].'</td></tr>';
 				echo '<tr><td>Email:</td><td>'.$row['email'].'</td></tr>';
-				echo '<tr><td>Adresa:</td><td>'.$adresa.'</td></tr>';
+				echo '<tr><td class="adresa">Adresa:</td><td>'.$adresa.'</td></tr>';
 				echo '<tr><td>Rodné číslo:</td><td><input class="required" max="9999999999" min="1000000000" type="number" name="rodne_cislo" value="'.$row['rodne_cislo'].'"></td></tr>';
 				echo '<tr><td>Číslo účtu:</td><td><input type="number" name="cislo_uctu" value="'.$row['cislo_uctu'].'"></td></tr>';
 				echo '<tr><td>Plat:</td><td><input class="required" type="number" name="plat" min="0" value="'.$row['plat'].'"></td></tr>';
-				echo '<tr><td>Pracovní pozice:</td><td><input class="required" type="text" name="pracovni_pozice" value="'.$row['pracovni_pozice'].'"></td></tr>';
+				echo '<tr><td>Pracovní pozice:</td><td><input class="required" maxlength="127" type="text" name="pracovni_pozice" value="'.$row['pracovni_pozice'].'"></td></tr>';
 				if ( $_SESSION['user']['pravo'] == 'spravce' ) {
 					$prava_text = implode( ', ', $prava_array );
-					echo '<tr><td>Oprávnění:</td><td><input class="required" type="text" name="opravneni" value="'.$row['pravo'].'"></td></tr>';
+					echo '<tr><td>Oprávnění:</td><td><input class="required" maxlength="127" type="text" name="opravneni" value="'.$row['pravo'].'"></td></tr>';
 					echo '<tr><td>Již založená práva:</td><td>'.$prava_text.'</td></tr>';
 				}
 				echo '</tbody></table>';
@@ -111,6 +122,10 @@
 		else {
 			echo '
 				<h3>Aktuální zaměstnanci</h3>
+				<p>
+					Tato tabulka obsahuje seznam všech zaměstnanců, kteří v této restauraci
+					pracují. Mělo by se jednat o přehled kdo na jaké pozici pracuje a kolik vydělává.
+				</p>
 				<form method="post"><table class="ohranicena_tabulka">
 					<thead>
 						<tr>
@@ -122,7 +137,6 @@
 							<td>Email</td>
 							<td>Číslo účtu</td>
 							<td>Plat</td>
-							<td>Adresa</td>
 							<td>Opravneni</td>
 							<td>Editovat</td>
 						</tr>
@@ -134,13 +148,13 @@
 					cislo_uctu, plat, mesto, ulice, cislo_popisne, psc, pravo, uzivatel
 				FROM iis_h_zamestnanec, iis_h_uzivatele
 				WHERE uzivatel = iis_h_uzivatele.ID
+				ORDER BY jmeno
 			");
 
 			if ( $data_zamestnancu && mysql_num_rows( $data_zamestnancu ) > 0 ) {
 				while( $row = mysql_fetch_assoc( $data_zamestnancu ) ) {
 					$name = "rezervace_check";
 					$disabled = ($_SESSION['user']['ID'] == $row['uzivatel'] || $row['pravo'] == 'spravce') ? "disabled":"";
-					$adresa = $row['ulice'].' '.$row['cislo_popisne'].', '.$row['psc'].' '.$row['mesto'];
 					$odkaz = explode('?', $_SERVER['REQUEST_URI'], 2);
 					$odkaz = $odkaz[0];
 					echo "<tr>";
@@ -152,7 +166,6 @@
 					echo "<td>".$row[ "email" ]."</td>";
 					echo "<td>".$row[ "cislo_uctu" ]."</td>";
 					echo "<td>".$row[ "plat" ]." Kč/měsíc</td>";
-					echo "<td>".$adresa."</td>";
 					echo "<td>".$row[ "pravo" ]."</td>";
 					echo "<td class=\"center\"><a href=\"$odkaz?editace=".$row['ID']."\"><img src=\"../pictures/editace.png\"></a></td>";
 					echo "</tr>";

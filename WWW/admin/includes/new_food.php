@@ -93,6 +93,7 @@
 		}
 
 		echo '<h3>Nová surovina</h3>';
+		echo '<p>Přidání nové suroviny na výrobu nějakého jídla.</p>';
 		if ( isset( $_POST['pridat_surovinu'] ) && !$_SESSION['refresh'] ) {
 			$jmeno = ( isset( $_POST['jmeno'] ) ? trim( $_POST['jmeno'] ) : "" );
 			$alergen = ( isset( $_POST['alergen'] ) ? trim( $_POST['alergen'] ) : "" );
@@ -114,22 +115,23 @@
 			}
 		}
 		echo '<form><table class="neohranicena_tabulka"><tbody>';
-		echo '<tr><td>Název:</td><td><input class="required" type="text" name="jmeno"></td></tr>';
-		echo '<tr><td>Alergeny:</td><td><input type="text" name="alergen"></td></tr>';
+		echo '<tr><td>Název:</td><td><input class="required" maxlength="127" type="text" name="jmeno"></td></tr>';
+		echo '<tr><td>Alergeny:</td><td><input type="text" maxlength="127" name="alergen"></td></tr>';
 		echo '</tbody></table>';
 		echo '<input type="submit" name="pridat_surovinu" value="Přidat novou surovinu"></form>';
 		echo '<h3>Nový pokrm</h3>';
 		echo '<h4>Informace o pokrmu</h4>';
+		echo '<p>Formulář pro vytvoření nové potraviny. Druh může být např. Předkrm, Příloha, Rybí pokrmy. Pořadí ovlivňuje řazení v tabulkách. Aktuálně předkrmy mají hodnotu 0, rybí jídla 40 a přílohy 100 (aby např. předkrm mohl být v tabulce před přílohou).</p>';
 		echo '<form method="post"><table><tbody>';
-		echo '<tr><td>Název:</td><td><input class="required" type="text" name="jmeno"></td></tr>';
-		echo '<tr><td>Druh:</td><td><input class="required" type="text" name="druh"></td></tr>';
-		echo '<tr><td>Pořadí:</td><td><input class="required" type="number" name="poradi"></td></tr>';
-		echo '<tr><td>Druh talíře:</td><td><input type="text" name="talir"></td></tr>';
-		echo '<tr><td>Druh sklenice:</td><td><input type="text" name="sklenice"></td></tr>';
-		echo '<tr><td>Cena:</td><td><input class="required" type="number" min="0" name="cena"> Kč</td></tr>';
-		echo '<tr><td>Doba přípravy :</td><td><input type="number" min="0" name="doba_pripravy"> minut</td></tr>';
-		echo '<tr><td class="top_align">Popis přípravy:</td><td><textarea rows="13" cols="80" name="popis_pripravy" ></textarea></td></tr>';
-		echo '<tr><td class="top_align">Popis pokrmu:</td><td><textarea class="required" rows="4" cols="80" name="popis" ></textarea></td></tr>';
+		echo '<tr><td>Název:</td><td><input maxlength="127" class="required" type="text" name="jmeno"></td></tr>';
+		echo '<tr><td>Druh:</td><td><input maxlength="127" class="required" type="text" name="druh"></td></tr>';
+		echo '<tr><td>Pořadí:</td><td><input maxlength="127" class="required" type="number" name="poradi"></td></tr>';
+		echo '<tr><td>Druh talíře:</td><td><input maxlength="127" type="text" name="talir"></td></tr>';
+		echo '<tr><td>Druh sklenice:</td><td><input maxlength="127" type="text" name="sklenice"></td></tr>';
+		echo '<tr><td>Cena:</td><td><input class="required" maxlength="127" type="number" min="0" name="cena"> Kč</td></tr>';
+		echo '<tr><td>Doba přípravy :</td><td><input type="number" maxlength="127" min="0" name="doba_pripravy"> minut</td></tr>';
+		echo '<tr><td class="top_align">Popis přípravy:</td><td><textarea maxlength="3999" rows="13" cols="80" name="popis_pripravy" ></textarea></td></tr>';
+		echo '<tr><td class="top_align">Popis pokrmu:</td><td><textarea class="required" maxlength="255" rows="4" cols="80" name="popis" ></textarea></td></tr>';
 		echo '</tbody></table>';
 		$suroviny_select = mysql_query("
 			SELECT ID, jmeno

@@ -8,11 +8,15 @@
 		<div id="header" >
 			<div id="header_box">
 				<div id="logo">
-					<h1><a><span>Sunny Night</span></a></h1>
+					<h1><a href="index.php"><span>Sunny Night</span></a></h1>
 				</div>
 					<h2> '.$h2_nadpis.' </h2>
-			</div>
-			<div id="menu_wrapper">
+					'
+					;
+					include 'includes/login.php';
+
+	echo '
+			</div><div id="menu_wrapper">
 				<a href="./index.php">Domů</a>
 				<span class="sep"> | </span>
 				<a href="./menu.php">Menu</a>

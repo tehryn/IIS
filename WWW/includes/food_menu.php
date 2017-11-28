@@ -29,7 +29,12 @@
 					if ( $next_row['ID'] == $row['ID'] ) {
 						array_push( $suroviny, $next_row['jmeno_suroviny'] );
 						if ( $next_row['alergeny'] != NULL ) {
-							array_push( $alergeny, $next_row['alergeny'] );
+							$alergeny_v_radku = explode( ',', $next_row['jmeno_suroviny'] );
+							foreach( $alergeny_v_radku as $alergen ) {
+								if ( !in_array( $alergen, $alergeny ) ) {
+									array_push( $alergeny, $alergen );
+								}
+							}
 						}
 					}
 				}
@@ -41,6 +46,8 @@
 					echo '<h3>'.$druh.'</h3>';
 					echo '<table class="neohranicena_tabulka"><tbody>';
 				}
+				sort( $alergeny );
+				sort( $suroviny );
 				$suroviny = implode( ', ', $suroviny );
 				$alergeny = implode( ', ', $alergeny );
 				echo '<tr>';

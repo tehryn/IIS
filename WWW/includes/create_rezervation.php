@@ -96,13 +96,21 @@
 			echo "<p class=\"error\">Nebyl vybrán stůl k rezervaci.</p>";
 		}
 		elseif ( $_SESSION[  'user' ] != "" && !$_SESSION[ 'refresh' ] && $pocet_rezervaci <= 2 ) {
+			$jmeno = $_SESSION['user']['jmeno'].' '.$_SESSION['user']['prijmeni'];
+			$kontakt = $_SESSION['user']['email'];
+			$uzivatel = $_SESSION[ 'user' ][ "ID" ];
 			$ok = mysql_query( "
 				INSERT INTO iis_h_rezervace
-				(odkdy, dokdy, uzivatel, stul)
-				values( STR_TO_DATE( '".$od."', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE( '".$do."', '%Y-%m-%d %H:%i:%s'), ".$_SESSION[ 'user' ][ "ID" ].", ".$rezervace_stul."   )
+				(odkdy, dokdy, uzivatel, stul, jmeno, kontakt)
+				values( STR_TO_DATE( '$od', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE( '$do', '%Y-%m-%d %H:%i:%s'), $uzivatel, $rezervace_stul, '$jmeno', '$kontakt' )
 			" );
-			$pocet_rezervaci++;
-			echo '<p class="ok">Rezervace proběhla úspěšně.</p>';
+			if ( $ok ) {
+				$pocet_rezervaci++;
+				echo '<p class="ok">Rezervace proběhla úspěšně.</p>';
+			}
+			else {
+				echo '<p class="error">Zadal/a jste nesprávné údaje.</p>';
+			}
 		}
 	}
 

@@ -111,26 +111,10 @@
 				<tbody>
 					<tr>
 						<td>
-							Email:
+							Email (login):
 						</td>
 						<td>
-							<input class="required" type="text" name="prihlaseni_email" value="'.$prihlaseni_email.'" />
-						</td>
-					</tr>
-					<tr>
-						<td>
-							Jméno:
-						</td>
-						<td>
-							<input class="required" type="text" name="prihlaseni_jmeno" value="'.$prihlaseni_jmeno.'" />
-						</td>
-					</tr>
-					<tr>
-						<td>
-							Příjmení:
-						</td>
-						<td>
-							<input class="required" type="text" name="prihlaseni_prijmeni" value="'.$prihlaseni_prijmeni.'" />
+							<input class="required" type="email" maxlength="127" name="prihlaseni_email" value="'.$prihlaseni_email.'" />
 						</td>
 					</tr>
 					<tr>
@@ -138,15 +122,31 @@
 							Heslo:
 						</td>
 						<td>
-							<input class="required" type="password" name="prihlaseni_heslo" value="'.$prihlaseni_heslo.'" />
+							<input class="required" type="password" maxlength="127" name="prihlaseni_heslo" value="'.$prihlaseni_heslo.'" />
 						</td>
 					</tr>
 					<tr>
 						<td>
-							Mesto:
+							Jméno:
 						</td>
 						<td>
-							<input type="text" name="prihlaseni_mesto" value="'.$prihlaseni_mesto.'" />
+							<input class="required" type="text" maxlength="127" name="prihlaseni_jmeno" value="'.$prihlaseni_jmeno.'" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Příjmení:
+						</td>
+						<td>
+							<input class="required" type="text" maxlength="127" name="prihlaseni_prijmeni" value="'.$prihlaseni_prijmeni.'" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Město:
+						</td>
+						<td>
+							<input type="text" name="prihlaseni_mesto" maxlength="127" value="'.$prihlaseni_mesto.'" />
 						</td>
 					</tr>
 					<tr>
@@ -154,7 +154,7 @@
 							Ulice:
 						</td>
 						<td>
-							<input type="text" name="prihlaseni_ulice" value="'.$prihlaseni_ulice.'" />
+							<input type="text" name="prihlaseni_ulice" maxlength="127" value="'.$prihlaseni_ulice.'" />
 						</td>
 					</tr>
 					<tr>
@@ -162,7 +162,7 @@
 							Číslo popisné:
 						</td>
 						<td>
-							<input type="text" name="prihlaseni_cislo_popisne" value="'.$prihlaseni_cislo_popisne.'" />
+							<input type="text" name="prihlaseni_cislo_popisne" maxlength="127" value="'.$prihlaseni_cislo_popisne.'" />
 						</td>
 					</tr>
 					<tr>

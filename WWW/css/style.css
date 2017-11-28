@@ -85,6 +85,7 @@ h4 {
     }
 
 #menu_wrapper {
+    clear: both;
     padding: 10px;
     margin: 0 -10px;
     text-align: right;
@@ -105,16 +106,33 @@ h4 {
 /* ----- LOGIN ----- */
 .login {
     text-align: center;
+    display: inline-block;
+    float: right;
+    color: #001e77;
+    margin: 15px 0;
 }
     .login table {
         margin: 10px auto;
         text-align: center;
+        display: inline-table;
+    }
+    .login input {
+        vertical-align: text-top;
+    }
+    .login .button, .login input[type="submit"] {
+        background-color: #4D7CD8;
+        color: #001e77;
+        margin-bottom: 0;
+    }
+    .login .button:hover, .login input[type="submit"]:hover {
+        background-color: #9EBAF1;
+        color: #001e77;
     }
     #userinfo .jmeno_prijmeni {
         font-weight: 700;
     }
 /* ----- TLACITKA ----- */
-button, input[type="button"], input[type="submit"] {
+button, .button, input[type="button"], input[type="submit"] {
     display: inline-block;
 	padding: 10px 20px;
 	min-width: 100px;
@@ -128,7 +146,7 @@ button, input[type="button"], input[type="submit"] {
     border: 1px solid #2D62CB;
     border-radius: 5px;
 }
-    button, input[type="button"], input[type="submit"]:hover {
+    button, .button, input[type="button"], input[type="submit"]:hover {
         text-decoration: none;
 
         color: #fff;
@@ -193,11 +211,15 @@ td:first-child {
             border: 1px solid black;
             font-weight: 700;
             text-align: center;
+            padding: 10px;
+            height: 30px;
         }
         .ohranicena_tabulka thead th {
             border: 1px solid black;
             font-weight: 700;
             text-align: center;
+            padding: 10px;
+            height: 30px;
         }
     .ohranicena_tabulka tbody tr {
         background-color: #fff;

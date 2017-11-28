@@ -15,9 +15,7 @@
 				else {
 					$h2_nadpis = 'Správa restaurace Sunny Night';
 					include 'includes/header.php';
-					include '../includes/login.php';
 					include 'includes/food.php';
-					include 'includes/new_food.php';
 				}
 			?>
 		</div>

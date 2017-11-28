@@ -1,9 +1,25 @@
 <?php
 	$pravo = $_SESSION['user']['pravo'];
-	if (!( $pravo == 'spravce' || $pravo == 'vedouci' || $pravo == 'masterchef' || $pravo == 'chef' || $pravo == 'cisnik')) {
+	if (!( $pravo == 'spravce' || $pravo == 'vedouci' || $pravo == 'masterchef' || $pravo == 'chef' || $pravo == 'zamestnanec')) {
 		header('Location: index.php');
 	}
 	else {
+		if ( isset( $_GET['dec'] ) ) {
+			$dec = trim( $_GET['dec'] );
+			mysql_query("
+			UPDATE iis_h_potravina
+			SET prodano_kusu = prodano_kusu - 1
+			WHERE id = $dec AND prodano_kusu > 0
+			");
+		}
+		if ( isset( $_GET['inc'] ) ) {
+			$inc = trim( $_GET['inc'] );
+			mysql_query("
+			UPDATE iis_h_potravina
+			SET prodano_kusu = prodano_kusu + 1
+			WHERE id = $inc
+			");
+		}
 		echo '<div class="sprava_jidla">';
 		if ( isset( $_POST['odebrat_potraviny'] ) ) {
 			foreach( $_POST['potraviny_odstranit'] as $zrusit_id ) {
@@ -65,22 +81,22 @@
 				SELECT  iis_h_potravina.ID, jmeno, druh, doba_pripravy, CAST(cena AS DECIMAL(11,2)) as cena,
 				prodano_kusu, poradi, talir, sklenice, popis, popis_pripravy
 				FROM iis_h_potravina, iis_s_potravina_surovina
-				WHERE ID = $id AND iis_h_potravina.ID = iis_s_potravina_surovina.ID
+				WHERE iis_h_potravina.ID = $id AND iis_h_potravina.ID = iis_s_potravina_surovina.ID
 			");
 
 			echo '<h3>Editace pokrmu</h3>';
 			if ( $selected_jidla && mysql_num_rows( $selected_jidla ) > 0 ) {
 				$row = mysql_fetch_assoc( $selected_jidla );
-				echo '<form method="post"><table class="ohranicena_tabulka"><tbody>';
-				echo '<tr><td>Název:</td><td><input class="required" type="text" name="jmeno" value="'.$row['jmeno'].'"></td></tr>';
-				echo '<tr><td>Druh:</td><td><input class="required" type="text" name="druh" value="'.$row['druh'].'"></td></tr>';
-				echo '<tr><td>Pořadí:</td><td><input class="required" type="number" name="poradi" value="'.$row['poradi'].'"></td></tr>';
-				echo '<tr><td>Druh talíře:</td><td><input type="text" name="talir" value="'.$row['talir'].'"></td></tr>';
-				echo '<tr><td>Druh sklenice:</td><td><input type="text" name="sklenice" value="'.$row['sklenice'].'"></td></tr>';
-				echo '<tr><td>Cena:</td><td><input class="required" type="number" name="cena" value="'.$row['cena'].'"> Kč</td></tr>';
-				echo '<tr><td>Doba přípravy :</td><td><input type="text" name="doba_pripravy" value="'.$row['doba_pripravy'].'"> minut</td></tr>';
-				echo '<tr><td class="top_align">Popis přípravy:</td><td><textarea rows="13" cols="80" name="popis_pripravy" >'.$row['popis_pripravy'].'</textarea></td></tr>';
-				echo '<tr><td class="top_align">Popis pokrmu:</td><td><textarea class="required" rows="4" cols="80" name="popis" >'.$row['popis'].'</textarea></td></tr>';
+				echo '<form method="post"><table class="neohranicena_tabulka"><tbody>';
+				echo '<tr><td>Název:</td><td><input maxlength="127" class="required" type="text" name="jmeno" value="'.$row['jmeno'].'"></td></tr>';
+				echo '<tr><td>Druh:</td><td><input maxlength="127" class="required" type="text" name="druh" value="'.$row['druh'].'"></td></tr>';
+				echo '<tr><td>Pořadí:</td><td><input maxlength="127" class="required" type="number" name="poradi" value="'.$row['poradi'].'"></td></tr>';
+				echo '<tr><td>Druh talíře:</td><td><input maxlength="127" type="text" name="talir" value="'.$row['talir'].'"></td></tr>';
+				echo '<tr><td>Druh sklenice:</td><td><input maxlength="127" type="text" name="sklenice" value="'.$row['sklenice'].'"></td></tr>';
+				echo '<tr><td>Cena:</td><td><input maxlength="127" class="required" type="number" name="cena" value="'.$row['cena'].'"> Kč</td></tr>';
+				echo '<tr><td>Doba přípravy :</td><td><input maxlength="127" type="text" name="doba_pripravy" value="'.$row['doba_pripravy'].'"> minut</td></tr>';
+				echo '<tr><td class="top_align">Popis přípravy:</td><td><textarea maxlength="3999"  rows="13" cols="80" name="popis_pripravy" >'.$row['popis_pripravy'].'</textarea></td></tr>';
+				echo '<tr><td class="top_align">Popis pokrmu:</td><td><textarea maxlength="255" class="required" rows="4" cols="80" name="popis" >'.$row['popis'].'</textarea></td></tr>';
 				echo '</tbody></table>';
 				echo '<input type="submit" name="potvrdit" value="Potvrdit změny">';
 				echo '<input type="hidden" name="pokrm" value="'.$id.'">';
@@ -92,6 +108,7 @@
 		}
 		else {
 			echo '<h3>Položky menu</h3>';
+			echo '<p>Seznam všech pokrmů zařazených do jídelního lístku.</p>';
 			$selected_jidla = mysql_query("
 				SELECT  ID, jmeno, druh, doba_pripravy, CAST(cena AS DECIMAL(11,2)) as cena, prodano_kusu, poradi
 				FROM iis_h_potravina
@@ -101,7 +118,7 @@
 			echo '
 					<thead>
 						<tr>
-							<td>Ozn.</td>
+							'.(($pravo == 'masterchef' || $pravo == 'spravce' || $pravo == 'vedouci' )?"<td>Ozn.</td>":"").'
 							<td>Název</td>
 							<td>Druh</td>
 							<td>Doba přípravy</td>
@@ -131,7 +148,7 @@
 					echo '<td>'.$row['druh'].'</td>';
 					echo '<td>'.$time.'</td>';
 					echo '<td>'.$row['cena'].'</td>';
-					echo '<td>'.$row['prodano_kusu'].'</td>';
+					echo '<td class="prodano_kusu"><span>'.$row['prodano_kusu'].'</span> <span class="odkazy"><a class="inc" href="jidlo.php?inc='.$row['ID'].'">+</a> <a class="dec" href="jidlo.php?dec='.$row['ID'].'">-</a></span></td>';
 					if ( $pravo == 'masterchef' || $pravo == 'spravce' ) {
 						echo "<td class=\"center\"><a href=\"$odkaz?potravina=".$row['ID']."\"><img src=\"../pictures/editace.png\"></a></td>";
 					}
@@ -140,8 +157,11 @@
 
 			}
 			echo '</tbody></table>';
-			echo '<input type="submit" name="odebrat_potraviny" value="Odstranit jídlo">';
+			if ( $pravo == 'masterchef' || $pravo == 'spravce' || $pravo == 'vedouci' ) {
+				echo '<input type="submit" name="odebrat_potraviny" value="Odstranit jídlo">';
+			}
 			echo '</div>';
+			include 'includes/new_food.php';
 		}
 	}
 ?>

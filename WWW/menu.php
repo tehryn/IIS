@@ -10,8 +10,7 @@
 		<?php
 			$h2_nadpis = 'Nabídka jídel';
 			include 'includes/header.php';
-			include 'includes/login.php';
-			?>
+		?>
 		<p>
 			Zde můžežete vidět naši nabídku jídel.
 			Zaměřujeme se především na upravované ryby všeho druhu.

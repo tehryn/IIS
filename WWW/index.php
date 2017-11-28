@@ -11,7 +11,6 @@
 			<?php
 				$h2_nadpis = 'Vítejte v restauraci Sunny Night!';
 				include 'includes/header.php';
-				include 'includes/login.php';
 			?>
 		</div>
 		<div class="info">

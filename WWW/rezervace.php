@@ -10,7 +10,6 @@
 		<?php
 			$h2_nadpis = 'Rezervace';
 			include 'includes/header.php';
-			include 'includes/login.php';
 		?>
 		<p>
 			Zde se nachází formulář k rezervaci stolů.

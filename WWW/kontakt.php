@@ -10,7 +10,6 @@
 			<?php
 				$h2_nadpis = 'Kontakt';
 				include 'includes/header.php';
-				include 'includes/login.php';
 			?>
 			<div id="kontakt">
 				<h3>Restaurace Sunny Night</h3>

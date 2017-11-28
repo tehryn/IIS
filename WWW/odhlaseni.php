@@ -17,7 +17,6 @@
 			Odhlášení proběhlo úspěšně.
 		</p>
 		<?php
-			include 'includes/login.php';
 			if ( $_SESSION[ 'user' ] != "" ) {
 				header( 'Location: index.php' );
 			}
