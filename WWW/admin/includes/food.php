@@ -1,9 +1,11 @@
 <?php
+	// kontrola opravneni
 	$pravo = $_SESSION['user']['pravo'];
 	if (!( $pravo == 'spravce' || $pravo == 'vedouci' || $pravo == 'masterchef' || $pravo == 'chef' || $pravo == 'zamestnanec')) {
 		header('Location: index.php');
 	}
 	else {
+		// snizeni poctu prodanych kusu
 		if ( isset( $_GET['dec'] ) ) {
 			$dec = trim( $_GET['dec'] );
 			mysql_query("
@@ -12,6 +14,7 @@
 			WHERE id = $dec AND prodano_kusu > 0
 			");
 		}
+		// zviseni poctu prodanych kusu
 		if ( isset( $_GET['inc'] ) ) {
 			$inc = trim( $_GET['inc'] );
 			mysql_query("
@@ -21,6 +24,7 @@
 			");
 		}
 		echo '<div class="sprava_jidla">';
+		// odstraneni pokrmu z databaze
 		if ( isset( $_POST['odebrat_potraviny'] ) ) {
 			foreach( $_POST['potraviny_odstranit'] as $zrusit_id ) {
 				mysql_query("
@@ -38,6 +42,7 @@
 				");
 			}
 		}
+		// editace + dalsi kontrola prav -> nekdo muze jen zobrazit, jini mohou i editovat
 		if ( ($pravo == 'masterchef' || $pravo == 'spravce') && isset( $_GET['potravina'] ) ) {
 			$id = trim( $_GET['potravina'] );
 			if ( isset( $_POST['potvrdit'] ) ) {
@@ -51,7 +56,9 @@
 				$popis_pripravy = isset( $_POST['popis_pripravy'] ) ? trim( $_POST['popis_pripravy'] ) : "";
 				$popis = isset( $_POST['popis'] ) ? trim( $_POST['popis'] ) : "";
 
+				// kontrola zadanych udaju
 				if ( $jmeno != "" && $druh != "" && $poradi != "" && $cena != "" && $popis != "" ) {
+					// update databaze - za tohle by me v praci zabili, ale co jsem se docetl, tak na binding variables potrebuji mysqli
 					$ok = mysql_query("
 						UPDATE iis_h_potravina
 						SET
@@ -77,13 +84,14 @@
 					echo '<p class="error">Některé povinné položky nebyly vyplněny!</p>';
 				}
 			}
+			// zjisteni informaci o pokrmu
 			$selected_jidla = mysql_query("
 				SELECT  iis_h_potravina.ID, jmeno, druh, doba_pripravy, CAST(cena AS DECIMAL(11,2)) as cena,
 				prodano_kusu, poradi, talir, sklenice, popis, popis_pripravy
 				FROM iis_h_potravina, iis_s_potravina_surovina
 				WHERE iis_h_potravina.ID = $id AND iis_h_potravina.ID = iis_s_potravina_surovina.ID
 			");
-
+			// zobrazeni informaci o pokrmu + editacni pole
 			echo '<h3>Editace pokrmu</h3>';
 			if ( $selected_jidla && mysql_num_rows( $selected_jidla ) > 0 ) {
 				$row = mysql_fetch_assoc( $selected_jidla );
@@ -106,9 +114,11 @@
 				echo '<p class="error">Zadaná položka neexistuje!</p>';
 			}
 		}
+		// prehledova tabulka s pokrmy
 		else {
 			echo '<h3>Položky menu</h3>';
 			echo '<p>Seznam všech pokrmů zařazených do jídelního lístku.</p>';
+			// zjisteni dat z databaze
 			$selected_jidla = mysql_query("
 				SELECT  ID, jmeno, druh, doba_pripravy, CAST(cena AS DECIMAL(11,2)) as cena, prodano_kusu, poradi
 				FROM iis_h_potravina
@@ -129,6 +139,7 @@
 					</thead>
 					<tbody>
 			';
+			// pokdu jsem nalezl nektera data
 			if ( $selected_jidla && mysql_num_rows( $selected_jidla ) > 0 ) {
 				$odkaz = explode('?', $_SERVER['REQUEST_URI'], 2);
 				$odkaz = $odkaz[0];
@@ -149,6 +160,7 @@
 					echo '<td>'.$time.'</td>';
 					echo '<td>'.$row['cena'].'</td>';
 					echo '<td class="prodano_kusu"><span>'.$row['prodano_kusu'].'</span> <span class="odkazy"><a class="inc" href="jidlo.php?inc='.$row['ID'].'">+</a> <a class="dec" href="jidlo.php?dec='.$row['ID'].'">-</a></span></td>';
+					// dalsi kontrola prav
 					if ( $pravo == 'masterchef' || $pravo == 'spravce' ) {
 						echo "<td class=\"center\"><a href=\"$odkaz?potravina=".$row['ID']."\"><img src=\"../pictures/editace.png\"></a></td>";
 					}
@@ -157,6 +169,7 @@
 
 			}
 			echo '</tbody></table>';
+			// zase prava
 			if ( $pravo == 'masterchef' || $pravo == 'spravce' || $pravo == 'vedouci' ) {
 				echo '<input type="submit" name="odebrat_potraviny" value="Odstranit jídlo">';
 			}

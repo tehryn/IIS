@@ -1,9 +1,11 @@
 <?php
+	// kontrola opravneni
 	$pravo = $_SESSION['user']['pravo'];
 	if ( !($pravo == 'zamestnanec' || $pravo == 'spravce' || $pravo == 'vedouci') ) {
 		header('Location: index.php');
 	}
 	else {
+		// nastaveni atributu value do textovych inputu
 		$rezervace_datum = date("Y-m-d");
 		$error_str = '<p class="error">';
 		if ( isset( $_POST[ "rezervace_datum" ] ) ) {
@@ -38,6 +40,7 @@
 			echo '<p class="error"> Povinné pole \'Kontakt\' není zadáné.</p>';
 		}
 
+		// kontrola zadanych dat
 		$od = $rezervace_datum." ".$rezervace_od.":00";
 		$do = $rezervace_datum." ".$rezervace_do.":00";
 		$vse_zadano = false;
@@ -61,10 +64,12 @@
 			}
 		}
 
+		// dalsi kontrola
 		if ( $vse_zadano && isset( $_POST['rezervovat']) ) {
 			$rezervovano = false;
 			if ( isset( $_POST['rezervace_check'] ) ) {
 				$zamestnanec = $_SESSION['user']['ID'];
+				// radeji si zapnu transakci, kdyby se neco nepovedlo v pulce, at to muzu rollbacknout
 				mysql_query("START TRANSACTION");
 				foreach( $_POST['rezervace_check'] as $stul ) {
 					$rezervovano = true;
@@ -86,6 +91,7 @@
 			}
 		}
 
+		// ruseni rezervaci
 		if ( isset( $_POST['zrusit_rezervaci_check'] ) ) {
 			foreach( $_POST['zrusit_rezervaci_check'] as $zrusit_id ) {
 				mysql_query( "
@@ -95,6 +101,7 @@
 			}
 		}
 
+		// generovani obsahu stranku
 		echo '
 			<h3>Nová rezervace</h3>
 			Zde můžete vyplnit rezervaci uživatele, který nemusí být zaregistrován.
@@ -192,6 +199,7 @@
 			;
 		}
 
+		// vyhledavani rezervaci podle datumu
 		$datetime = new DateTime('today');
 		$od = $datetime->format('Y-m-d');
 		$do = $od;
@@ -227,6 +235,7 @@
 		echo '</tbody></table>';
 		echo '<input type="submit" value="Potvrdit" name="potvrdit">';
 		echo '</form>';
+		// pokud vse ok, vykreslim tabulku
 		if ( $vse_zadano ) {
 			$rezervace_data = mysql_query( "
 				SELECT iis_h_stul.ID AS stul_id, iis_h_rezervace.ID, lokace, pocet_zidli, jmeno, kontakt,

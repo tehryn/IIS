@@ -1,7 +1,9 @@
 <?php
+	// nacteni vstupnich parametru
 	echo '<div class=rezervation>';
 	$pocet_rezervaci = 0;
 	if ( isset( $_POST[ 'submit_rezervace_zrusit' ] ) && isset( $_POST[ 'zrusit_rezervaci_check' ] ) ) {
+		// ruseni rezervaci
 		foreach( $_POST['zrusit_rezervaci_check'] as $zrusit_id ) {
 			mysql_query( "
 				DELETE FROM iis_h_rezervace
@@ -9,6 +11,8 @@
 			);
 		}
 	}
+
+	// warning/error pokud neni uzivatel prihlasen
 	if ( $_SESSION[ 'user' ] == "" ) {
 		if ( isset( $_POST[ 'submit_rezervace_rezervovat' ] ) ) {
 			echo '<p class="error">
@@ -26,6 +30,7 @@
 		}
 	}
 	else {
+		// pocet rezervaci
 		$rezervace_pocet = mysql_query( "
 			SELECT COUNT(1) AS pocet
 			FROM iis_h_stul, iis_h_rezervace
@@ -39,6 +44,7 @@
 		}
 	}
 
+	// nastaveni atributu value pro inputy
 	$rezervace_datum = date("Y-m-d");
 	$error_str = '<p class="error">';
 	if ( isset( $_POST[ "rezervace_datum" ] ) ) {
@@ -64,6 +70,7 @@
 		echo "<p class=\"error\">Povinné pole 'Do kdy' nebylo zadáno.</p>";
 	}
 
+	// kontrola zadanych dat
 	$od = $rezervace_datum." ".$rezervace_od.":00";
 	$do = $rezervace_datum." ".$rezervace_do.":00";
 	$vse_zadano = false;
@@ -87,6 +94,7 @@
 		}
 	}
 
+	// tvorba rezervace
 	if ( isset( $_POST[ 'submit_rezervace_rezervovat' ] ) && $vse_zadano  ) {
 		$rezervace_stul = "";
 		if ( isset( $_POST[ "rezervace_check" ] ) ) {
@@ -114,12 +122,15 @@
 		}
 	}
 
+	// error/warning o rezervaci max 3 stolu
 	if ( $pocet_rezervaci > 2 && isset( $_POST[ 'submit_rezervace_rezervovat' ] ) ) {
 		echo '<p class="error">Pokud si chcete rezervovat více jak 3 stoly, rezervaci proveďte buď osobně nebo nás kontaktujte.</p>';
 	}
 	else {
 		echo '<p class="warning">Pokud si chcete rezervovat více jak 3 stoly, rezervaci proveďte buď osobně nebo nás kontaktujte.</p>';
 	}
+
+	// generovani obsahu stranky
 	echo '
 		<h3>Nová rezervace</h3>
 		<h4>Datum a čas rezervace</h4>
@@ -159,6 +170,7 @@
 			</table>
 		</form>
 	';
+	// pokud zadal vse potrebne, ukazi mu tabulku s volnymi stoly
 	if ( $vse_zadano ) {
 		echo '
 			<h4>Volné stoly na den '.DateTime::createFromFormat('Y-m-d', $rezervace_datum)->format('d. m. Y').' od '.$rezervace_od.' do '.$rezervace_do.' hodin</h4>
@@ -210,6 +222,7 @@
 			</form>';
 	}
 
+	// pokud je prihlasen, ukazi mu tabulku s jeho rezervacemi.
 	if ( $_SESSION[ 'user' ] != "" ) {
 		$rezervace_data = mysql_query( "
 			SELECT iis_h_stul.ID AS stul_id, iis_h_rezervace.ID, lokace, pocet_zidli, DATE_FORMAT(odkdy, '%d. %m. %Y %H:%i') AS odkdy, DATE_FORMAT(dokdy, '%H:%i') as dokdy

@@ -2,6 +2,7 @@
 	echo '<div class="registration">';
 	$error_str = '<p class="error">';
 	$prihlaseni_jmeno = "";
+	// nacteni vsech parametru
 	if ( isset( $_POST[ "prihlaseni_jmeno" ] ) ) {
 		$prihlaseni_jmeno = trim( $_POST[ "prihlaseni_jmeno" ] );
 	}
@@ -58,7 +59,9 @@
 		$error_str = "";
 	}
 
+	// kontrola prihlaseni
 	if ( $error_str == "" && isset( $_POST[ "prihlaseni_submit" ] ) ) {
+		// kontrola duplicity
 		$prihlaseni = mysql_query( "
 			SELECT ID
 			FROM iis_h_uzivatele
@@ -68,6 +71,7 @@
 			echo '<p class="error">Tento email je jiz zaregistrován.</p>';
 		}
 		else {
+			// vlozeni noveho uzivatele
 			$insert = mysql_query("
 				INSERT INTO iis_h_uzivatele( jmeno, prijmeni, email, heslo, mesto, ulice, cislo_popisne, psc )
 				values(
@@ -103,6 +107,7 @@
 		header('Location: index.php');
 	}
 	else {
+	// generovani obsahu stranky
 	echo '
 		<h3>Registrace:</h3>
 		'.$error_str.'

@@ -1,6 +1,8 @@
 <?php
 	$pravo = $_SESSION['user']['pravo'];
+	// kontrola opravneni
 	if ( $pravo == 'masterchef' || $pravo == 'spravce' ) {
+		// vlozeni noveho jidla
 		if ( isset( $_POST['ulozit'] ) ) {
 			$jmeno = ( isset( $_POST['jmeno'] )? trim( $_POST['jmeno'] ) : "" );
 			$druh = ( isset( $_POST['druh'] )? trim( $_POST['druh'] ) : "" );
@@ -38,7 +40,7 @@
 			if ( $doba_pripravy == '' ) {
 				$doba_pripravy = 'NULL';
 			}
-
+			// kontrola parametru
 			if ( $jmeno != '' && $druh != '' && $poradi != '' && $cena != '' && $popis != '' && !$_SESSION['refresh']) {
 				$ok = mysql_query( "
 					INSERT INTO iis_h_potravina
@@ -53,6 +55,7 @@
 						FROM iis_h_surovina
 					");
 					$ok_message = $ok;
+					// vlozeni surovindo tabulky
 					while ( $suroviny_select && $row = mysql_fetch_assoc( $suroviny_select ) ) {
 						if ( isset( $_POST[$row['ID']] ) ) {
 							$surovina = $row['ID'];
@@ -63,7 +66,7 @@
 								values( $inserted_id, $surovina, $mnozstvi )
 								");
 							}
-
+							// pokud selzu, smazu co jsem vlozil
 							if ( $ok ) { }
 							else {
 								mysql_query("
@@ -79,6 +82,7 @@
 							}
 						}
 					}
+					// musim refreshnout stranku, at se zmeny projevi i v tabulce, tu bohuzel vykresluji pred timto formularem
 					if ( $ok_message ) {
 						header("Refresh:0");
 					}
@@ -94,6 +98,7 @@
 
 		echo '<h3>Nová surovina</h3>';
 		echo '<p>Přidání nové suroviny na výrobu nějakého jídla.</p>';
+		// nova surovina
 		if ( isset( $_POST['pridat_surovinu'] ) && !$_SESSION['refresh'] ) {
 			$jmeno = ( isset( $_POST['jmeno'] ) ? trim( $_POST['jmeno'] ) : "" );
 			$alergen = ( isset( $_POST['alergen'] ) ? trim( $_POST['alergen'] ) : "" );
@@ -114,6 +119,7 @@
 				echo '<p class="error">Data nebyla zadána ve správném formátu</p>';
 			}
 		}
+		// novy pokrm
 		echo '<form><table class="neohranicena_tabulka"><tbody>';
 		echo '<tr><td>Název:</td><td><input class="required" maxlength="127" type="text" name="jmeno"></td></tr>';
 		echo '<tr><td>Alergeny:</td><td><input type="text" maxlength="127" name="alergen"></td></tr>';
@@ -136,6 +142,7 @@
 		$suroviny_select = mysql_query("
 			SELECT ID, jmeno
 			FROM iis_h_surovina
+			ORDER BY jmeno
 		");
 		echo '<h4>Suroviny obsažené v pokrmu</h4>';
 		echo '<table class="neohranicena_tabulka"><tbody>';

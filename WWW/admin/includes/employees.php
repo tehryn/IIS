@@ -1,7 +1,9 @@
 <?php
 	$pravo = $_SESSION['user']['pravo'];
+	// kontrola prav
 	if ( $pravo == 'spravce' || $pravo == 'vedouci' ) {
 		echo '<div class="zamestnanci">';
+		// mazani zamestnance
 		if ( isset( $_POST['zrusit'] ) && isset( $_POST['propustit_zamestnance'] ) ) {
 			$uvazky = trim( $_POST['zrusit'] );
 			foreach( $_POST['propustit_zamestnance'] as $zrusit_id ) {
@@ -11,10 +13,11 @@
 				);
 		 	}
 		}
+		// editace zamestnance
 		if ( isset( $_GET['editace'] ) ) {
 			echo '<h3>Editace zaměstnance</h3>';
 			$id = trim( $_GET['editace'] );
-
+			// kontrola vstupnich parametru
 			if ( isset( $_POST['potvrdit'] ) && isset( $_POST['uzivatel'] ) ) {
 				$uzivatel = trim( $_POST['uzivatel'] );
 				$cislo_uctu = isset( $_POST['cislo_uctu'] ) && trim( $_POST['cislo_uctu'] ) != "" ? trim( $_POST['cislo_uctu'] ) : "NULL";
@@ -22,7 +25,7 @@
 				$pracovni_pozice = isset( $_POST['pracovni_pozice'] ) ? trim( $_POST['pracovni_pozice'] ) : "";
 				$rodne_cislo = isset( $_POST['rodne_cislo'] ) ? trim( $_POST['rodne_cislo'] ) : "";
 				$opravneni = isset( $_POST['opravneni'] ) ? trim( $_POST['opravneni'] ) : "";
-
+				// aktualizace databaze
 				if ( $pracovni_pozice != "" && $plat != "" && $rodne_cislo != "" ) {
 					$ok = mysql_query( "
 						UPDATE iis_h_zamestnanec
@@ -33,6 +36,7 @@
 							rodne_cislo     = $rodne_cislo
 						WHERE ID = $id
 					");
+					// kontrola updatu
 					if ( !$ok ) {
 						echo '<p class="error">Zadal jste neplatné údaje.</p>';
 					}
@@ -47,6 +51,7 @@
 						echo '<p class="ok">Data byla aktualizována.</p>';
 					}
 				}
+				// nezadani uplnych dat
 				else {
 					if ( $pracovni_pozice == "" ) {
 						echo '<p class="error">Pracovní pozice nebyla specifikována.</p>';
@@ -64,23 +69,27 @@
 					}
 				}
 			}
-
+			// zobrazeni dat zamestnance
 			$data_zamestnance = mysql_query("
 				SELECT iis_h_zamestnanec.ID, jmeno, prijmeni, email, rodne_cislo, pracovni_pozice,
 					cislo_uctu, plat, mesto, ulice, cislo_popisne, psc, pravo, uzivatel
 				FROM iis_h_zamestnanec, iis_h_uzivatele
 				WHERE uzivatel = iis_h_uzivatele.ID AND iis_h_zamestnanec.ID = $id
 			");
+			// evidovana prava
 			$data_prava = mysql_query("
 				SELECT DISTINCT pravo
 				FROM iis_h_uzivatele
+				ORDER BY pravo
 			");
+			// pole s pravy
 			$prava_array = array();
 			if ( $data_prava ) {
 				while ( $row = mysql_fetch_assoc( $data_prava ) ) {
 					array_push( $prava_array, $row['pravo'] );
 				}
 			}
+			// pokud zamestnanec existuje, vypisu tabulku s udaji o nem
 			if ( $data_zamestnance && mysql_num_rows( $data_zamestnance ) > 0 ) {
 				$row = mysql_fetch_assoc( $data_zamestnance );
 				$adresa = "";
@@ -115,10 +124,12 @@
 				echo '<input type="hidden" name="uzivatel" value="'.$row['uzivatel'].'">';
 				echo '</form>';
 			}
+			// zamestnanec neexistuje
 			else {
 				echo '<p class="error">Nekorektní použití aplikace, zadaný zaměstnanec neexistuje!</p>';
 			}
 		}
+		// prehled vsech zamestnancu
 		else {
 			echo '
 				<h3>Aktuální zaměstnanci</h3>
@@ -150,7 +161,7 @@
 				WHERE uzivatel = iis_h_uzivatele.ID
 				ORDER BY jmeno
 			");
-
+			// dulezita data, ktera evidujeme v databazi
 			if ( $data_zamestnancu && mysql_num_rows( $data_zamestnancu ) > 0 ) {
 				while( $row = mysql_fetch_assoc( $data_zamestnancu ) ) {
 					$name = "rezervace_check";
@@ -179,6 +190,7 @@
 
 		echo '</div>';
 	}
+	// uzivatel nema pravo - poslu ho na index, ten si s nim poradi
 	else {
 		header('Location: index.php');
 	}

@@ -1,4 +1,5 @@
 <?php
+	// zde zobrazuji nabidku podle prav uzivatele
 	$pravo = "neregistrovan";
 	if ( $_SESSION['user'] != '' ) {
 		$pravo = $_SESSION['user']['pravo'];

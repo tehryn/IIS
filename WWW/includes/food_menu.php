@@ -1,5 +1,8 @@
 <?php
+	// jidelni listek
 	echo '<div class="food_menu">';
+	// bud pouziji jeden select a zrychlim program nebo pouziji select v cyklu a
+	// v pripade velkeho mnozstvi zaznamu to uzivatel pozna... Takze jen jeden select!
 	$selected_jidla = mysql_query("
 		SELECT  iis_h_potravina.ID, iis_h_potravina.jmeno AS jmeno_potraviny,
 				iis_h_surovina.jmeno AS jmeno_suroviny, druh, CAST(cena AS DECIMAL(11,2)) as cena,
@@ -21,16 +24,20 @@
 		$i = 0;
 		$next_row = "";
 		$prev_id = 0;
+		// pro kazde jidlo
 		foreach ( $jidla_data as $row) {
 			if ( $next_row == "" || $prev_id != $row['ID']  ) {
 				$suroviny  = array();
 				$alergeny  = array();
+				// pro kazdou surovinu
 				foreach ( $jidla_data as $next_row) {
 					if ( $next_row['ID'] == $row['ID'] ) {
 						array_push( $suroviny, $next_row['jmeno_suroviny'] );
 						if ( $next_row['alergeny'] != NULL ) {
 							$alergeny_v_radku = explode( ',', $next_row['jmeno_suroviny'] );
+							// pro kazdy alergen
 							foreach( $alergeny_v_radku as $alergen ) {
+								// kontrolo duplicity takze narocnost O^4 :D
 								if ( !in_array( $alergen, $alergeny ) ) {
 									array_push( $alergeny, $alergen );
 								}
@@ -46,6 +53,8 @@
 					echo '<h3>'.$druh.'</h3>';
 					echo '<table class="neohranicena_tabulka"><tbody>';
 				}
+				// A jeste razeni pole... 2x... mno takze O^4 + 2 * O * nejaky logaritmus
+				// asi by to slo udelat efektivneji, ale alespon nezadezuji mysql server zbytecnymi dotazy
 				sort( $alergeny );
 				sort( $suroviny );
 				$suroviny = implode( ', ', $suroviny );

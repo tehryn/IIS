@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0047)file:///home/mmmaster/Plocha/Projekt%20IIS.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+
+    <title>Projekt IIS</title>
+    <style type="text/css">
+    	table { border-collapse: collapse; }
+    	td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
+    	dt { font-weight: bold; margin-top: 0.5em; }
+    </style>
+<style></style></head>
+<body>
+
+<!-- Zkontrolujte prosím nastavení kódování v hlavičce dokumentu
+     podle použitého editoru -->
+
+<h1>Restaurace</h1> <!-- Nahradte názvem svého zadání -->
+
+<dl>
+	<dt>Autoři</dt>
+	<dd>Matějka Jiří <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <a href="mailto:xmatej52@stud.fit.vutbr.cz">xmatej52@stud.fit.vutbr.cz</a> -
+		Správa databáze, php skripty
+	</dd>
+	<dd>Míšová Miroslava <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <a href="mailto:xautor02@stud.fit.vutbr.cz">xmisov00@stud.fit.vutbr.cz</a> -
+		CSS a testování
+	</dd>
+	<dt>URL aplikace</dt>
+	<dd><a href="http://www.stud.fit.vutbr.cz/~xmatej52/IIS/WWW/admin/index.php">http://www.stud.fit.vutbr.cz/~xmatej52/IIS/WWW/admin/index.php</a> - Administrativa</dd>
+	<dd><a href="http://www.stud.fit.vutbr.cz/~xmatej52/IIS/WWW/index.php">http://www.stud.fit.vutbr.cz/~xmatej52/IIS/WWW/index.php</a> -	 Veřejné stránky</dd>
+</dl>
+
+<h2>Uživatelé systému pro testování</h2>
+<p>Uveďte prosím existující zástupce <strong>všech rolí uživatelů</strong>.</p>
+<table>
+<tbody><tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
+<tr><td>xmatej52@stud.fit.vutbr.cz</td><td>admin</td><td>Správce informačního systému</td></tr>
+<tr><td>prodavac</td><td>prodavac</td><td>Prodavač</td></tr>
+<tr><td>franta</td><td>franta</td><td>Zákazník</td></tr>
+</tbody></table>
+
+<h2>Implementace</h2>
+<p>
+	<b>WWW/index.php</b><br>
+	Uvítací stránka restaurace
+</p>
+<p>
+	<b>WWW/kontakt.php</b><br>
+	Kontaktní informace pro restauraci
+</p>
+<p>
+	<b>WWW/menu.php</b><br>
+	Nabídka jídel. Je to sloučení 3 tabulek a je zde přehled potravin a
+	surovin ze kterých se potravina skládá a alergenů obsažených v potravině.<br>
+	Tyto tabulky byly oproti upraveny:<br>
+	Primární klíč je číslo ID - pro lepší práci s formuláři.<br>
+	Přidán sloupec url_obrazku - nakonec nebyl použit, ale zamýšleli jsme přidání obrázků k jídlům.<br>
+	Přidán sloupec poradi      - určuje v jakém pořadí se bude menu vypisovat.<br>
+	Přidán sloupec popis       - stručný popis potraviny v menu.<br>
+</p>
+<p>
+	<b>WWW/odhlaseni.php</b><br>
+	Odhlášení ze systému
+</p>
+<p>
+	<b>WWW/registrace.php</b><br>
+	Přihlášení do systému. Od návrh se lyší tím, že byla založena tublka pro uživatele,
+	která převzala spoustu věcí od tabulky zaměstnanců.<br>
+	Sloupce iis_h_zamestnanec: ID (PK), pracovni_pozice, rodne_cislo, cislo_uctu, plat, uzivatel (cizí klíč do tabulky uživatelů)<br>
+	Sloupce iis_h_uzivatele: ID (PK), jmeno, prijmeni, email, heslo, mesto, ulice, cislo_popisne, psc, pravo<br>
+	Toto asi byla největší změna od původního návrhu. Potřeboval jsem mít možnost registrovat někoho jiného,
+	než jen zaměstnance restaurace - kvůli rezervačnímu systému. Také jsem potřeboval omezit přístup
+	různým uživatélům na web.
+</p>
+<p>
+	<b>WWW/rezervace.php</b><br>
+	Rezervační systém restaurace. Rezervace může vytvářet registrovaný zákazník i zaměstnanec. Např. když někdo neregistrovaný
+	zavolá do restaurace. Zákazník může mít v jednu chvíli rezervovány maximálně 3 stoly - aby nemohl zbytečně blokovat restaruaci.
+	Zaměstnanec namá omezeno, kolik rezervací může vytvořit. Zaměstnanec vytváří rezervace v administrativní části aplikace.
+</p>
+<p>
+	<b>WWW/admin/index.php</b><br>
+	Přihlášení, odhlášení uživatelů a přesměrovávání zbloudilých duší pryč z administrativní části systému.
+</p>
+<p>
+	<b>WWW/admin/jidlo.php</b><br>
+	Editace a vytváření nových jídel a surovin a jejich odebírání. Dále lze zde editovat počty
+	prodaných potravin. Tato aplikace funguje skoro pod každým uživatelem jinak. Lze ji
+	navštívit se správcem systému, šéfkuchařem, vedoucím, kuchařem a standartním zaměstnancem.
+	Každý bude mít nastavená jiná oprávnění v aplikaci.
+</p>
+<p>
+	<b>WWW/admin/odhlaseni.php</b><br>
+	Odhlášení z aplikace
+</p>
+<p>
+	<b>WWW/admin/rezervace.php</b><br>
+	Rezervační systém pro zaměstnance, opět hlídám oprávněním. Lze ji navštívit
+	správcem systému, vedoucím a standartním uživatelem.
+</p>
+<p>
+	<b>WWW/admin/uzivatele.php</b><br>
+	Přehled a mazání uživatelů, dále je zde možnost prohlásit uživatele za zaměstnance.
+	Opět hlídáno oprávněním. Přístup má zde správce informačního systému a vedoucí
+</p>
+<p>
+	<b>WWW/admin/zamestnanci.php</b><br>
+	Přehled pracovních úvazků s uživateli. Jeden uživatel může mít více pracovních úvazků.
+	Lze zde i nastavovat oprávnění zaměstnanců a editovat některé jejich údaje.
+	Přístup má zde opět pouze správce informačního systému a vedoucí. Je zde i omezení
+	na mazání úvazků. (Např. nelze přerušit úvazek se správcem - on jako jediný
+	může nastavovat oprávnění jiným uživatelům - toho lze docílit v editaci zaměstnance.)
+</p>
+
+<p>
+	<b>WWW/includes/* a WWW/admin/includes/*</b><br>
+	Obsluha vstupních parametrů a práce s databází - nejen insert a update tabulek,
+	ale i načtení dat z databáze a 	jejich vizualizace.
+</p>
+<h2>Instalace</h2>
+<ul>
+<li>Pomocí mysql spusťte skript iis_restaurace.sql (nebo import pres phpMyAdmin), skript vytvoří tabulky a vyplní základní data.</li>
+<li>Softwarové požadavky: mysql Ver 14.14 Distrib 5.5.58, PHP 5.6.25  </li>
+<li>Jak rozbalit, konfigurovat, inicializovat databází, ...</li>
+</ul>
+
+<h2>Známé problémy</h2>
+<p>
+	Systém objednávek a účtenek nebyl implementován. A to z důvodu, že jsme se nechali unést implementací
+	našich vlastních rozšíření, jako je např. správa uživatelů nebo oprávnění a na účtenky a objednávky
+	nezbyl čas. Ale evidence kolik kterého jídla se prodalo je plně funkční (WWW/admin/jidlo.php)
+</p>
+
+
+
+</body></html>

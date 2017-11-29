@@ -1,4 +1,5 @@
 <?php
+	// kontrola opravneni
 	$pravo = $_SESSION['user']['pravo'];
 	if ( $pravo == 'vedouci' || $pravo == 'spravce' ) {
 		echo '<div class="uzivatele">';
@@ -10,6 +11,7 @@
 				);
 		 	}
 		}
+		// tvorba pracovniho uvazku
 		if ( isset( $_GET['zamestnanec'] ) ) {
 			echo '<h3>Registrovaní uživatelé</h3>';
 			$id = trim( $_GET['zamestnanec'] );
@@ -46,7 +48,7 @@
 					}
 				}
 			}
-
+			// informace o uzivateli + inputy potrebne pro navazani pracovniho uvazku
 			$data_zamestnance = mysql_query("
 				SELECT ID, jmeno, prijmeni, email, mesto, ulice, cislo_popisne, psc, pravo
 				FROM iis_h_uzivatele
@@ -84,6 +86,7 @@
 				echo '<p class="error">Nekorektní použití aplikace, zadaný uživatel neexistuje!</p>';
 			}
 		}
+		// prehled vsech registrovanych
 		else {
 			echo '
 				<h3>Registrovaní uživatelé</h3>
