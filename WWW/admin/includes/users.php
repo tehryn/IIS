@@ -109,11 +109,18 @@
 				SELECT ID, jmeno, prijmeni, email, mesto, ulice, cislo_popisne, psc, pravo
 				FROM iis_h_uzivatele
 			");
-
+			$disabled_data = mysql_query( "SELECT DISTINCT uzivatel FROM iis_h_zamestnanec" );
+			$disabled_array = array();
+			while( $row = mysql_fetch_assoc( $disabled_data ) ) {
+				array_push( $disabled_array, $row['uzivatel'] );
+			}
 			if ( $data_zamestnancu && mysql_num_rows( $data_zamestnancu ) > 0 ) {
 				while( $row = mysql_fetch_assoc( $data_zamestnancu ) ) {
 					$name = "rezervace_check";
-					$disabled = ($_SESSION['user']['ID'] == $row['ID'] || $row['pravo'] == 'spravce') ? "disabled":"";
+					$disabled = "";
+					if ( in_array( $row['ID'], $disabled_array ) ) {
+						$disabled = "disabled";
+					}
 					$odkaz = explode('?', $_SERVER['REQUEST_URI'], 2);
 					$odkaz = $odkaz[0];
 					echo "<tr>";
