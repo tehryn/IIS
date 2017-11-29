@@ -23,12 +23,12 @@
 		Správa databáze, php skripty
 	</dd>
 	<dd>Mí¹ová Miroslava <!-- Nahraïte skuteèným jménem a e-mailem autora a popisem èinnosti -->
-	    <a href="mailto:xmisov00@stud.fit.vutbr.cz">xmisov00@stud.fit.vutbr.cz</a> -
+	    <a href="mailto:xautor02@stud.fit.vutbr.cz">xmisov00@stud.fit.vutbr.cz</a> -
 		CSS a testování
 	</dd>
 	<dt>URL aplikace</dt>
 	<dd><a href="http://www.stud.fit.vutbr.cz/~xmatej52/IIS/WWW/admin/index.php">http://www.stud.fit.vutbr.cz/~xmatej52/IIS/WWW/admin/index.php</a> - Administrativa</dd>
-	<dd><a href="http://www.stud.fit.vutbr.cz/~xmatej52/IIS/WWW/index.php">http://www.stud.fit.vutbr.cz/~xmatej52/IIS/WWW/index.php</a> - Veøejné stránky</dd>
+	<dd><a href="http://www.stud.fit.vutbr.cz/~xmatej52/IIS/WWW/index.php">http://www.stud.fit.vutbr.cz/~xmatej52/IIS/WWW/index.php</a> -	 Veøejné stránky</dd>
 </dl>
 
 <h2>U¾ivatelé systému pro testování</h2>
@@ -38,52 +38,50 @@
 <tr><td>xmatej52@stud.fit.vutbr.cz</td><td>admin</td><td>Správce informaèního systému</td></tr>
 <tr><td>xmisov00@stud.fit.vutbr.cz</td><td>xmisov00</td><td>Vedoucí restaurace</td></tr>
 <tr><td>test01@ether123.net</td><td>test01</td><td>©éfkuchaø</td></tr>
-<tr><td>test13@test.cz</td><td>test13</td><td>Kuchaø</td></tr>
+<tr><td>test13@test.cz</td><td>test13</td><td>kuchaø</td></tr>
+<tr><td>xmatej52@stud.fit.vutbr.cz</td><td>admin</td><td>Správce informaèního systému</td></tr>
 <tr><td>test15@test.cz</td><td>test15</td><td>Standatrdní zamìstnanec (konkrétnì èí¹ník)</td></tr>
-<tr><td>test07@ether123.net</td><td>test07</td><td>Zákazník</td></tr>
+<tr><td>test07@ether123.net/td><td>test07</td><td>Zákazník</td></tr>
 </tbody></table>
 
 <h2>Implementace</h2>
 <p>
 	<b>WWW/index.php</b><br>
-	Uvítací stránka restaurace.
+	Uvítací stránka restaurace
 </p>
 <p>
 	<b>WWW/kontakt.php</b><br>
-	Kontaktní informace pro restauraci.
+	Kontaktní informace pro restauraci
 </p>
 <p>
 	<b>WWW/menu.php</b><br>
-	Nabídka jídel. Je to slouèení 3 tabulek, nachází se zde pøehled potravin a
-	surovin, ze kterých se potravina skládá, a alergenù obsa¾ených v potravinì.<br>
-</p>
-<p>
-	Tyto tabulky byly oproti IUS a IDS upraveny:
-    <ul>
-        <li>Primární klíè je èíslo ID - pro lep¹í práci s formuláøi.</li>
-        <li>Pøidán sloupec url_obrazku - nakonec nebyl pou¾it, ale zamý¹leli jsme pøidání obrázkù k jídlùm.</li>
-        <li>Pøidán sloupec poradi - urèuje v jakém poøadí se bude menu vypisovat.</li>
-        <li>Pøidán sloupec popis - struèný popis potraviny v menu.</li>
-    </ul>
+	Nabídka jídel. Je to slouèení 3 tabulek a je zde pøehled potravin a
+	surovin ze kterých se potravina skládá a alergenù obsa¾ených v potravinì.<br>
+	Tyto tabulky byly oproti upraveny:<br>
+	Primární klíè je èíslo ID - pro lep¹í práci s formuláøi.<br>
+	Pøidán sloupec url_obrazku - nakonec nebyl pou¾it, ale zamý¹leli jsme pøidání obrázkù k jídlùm.<br>
+	Pøidán sloupec poradi      - urèuje v jakém poøadí se bude menu vypisovat.<br>
+	Pøidán sloupec popis       - struèný popis potraviny v menu.<br>
 </p>
 <p>
 	<b>WWW/odhlaseni.php</b><br>
-	Odhlá¹ení ze systému.
+	Odhlá¹ení ze systému
 </p>
 <p>
 	<b>WWW/registrace.php</b><br>
-	Pøihlá¹ení do systému. Od návrhu se li¹í tím, ¾e byla zalo¾ena tabulka pro u¾ivatele,
-	která pøevzala spoustu vìcí z tabulky zamìstnancù.<br>
+	Pøihlá¹ení do systému. Od návrh se ly¹í tím, ¾e byla zalo¾ena tublka pro u¾ivatele,
+	která pøevzala spoustu vìcí od tabulky zamìstnancù.<br>
 	Sloupce iis_h_zamestnanec: ID (PK), pracovni_pozice, rodne_cislo, cislo_uctu, plat, uzivatel (cizí klíè do tabulky u¾ivatelù)<br>
 	Sloupce iis_h_uzivatele: ID (PK), jmeno, prijmeni, email, heslo, mesto, ulice, cislo_popisne, psc, pravo<br>
-	Toto asi byla nejvìt¹í zmìna od pùvodního návrhu. Kvùli rezervaènímu systému jsem potøeboval mít mo¾nost registrovat nìkoho jiného,
-	ne¾ jen zamìstnance restaurace. Také jsem potøeboval omezit pøístup rùzným u¾ivatelùm na web.
+	Toto asi byla nejvìt¹í zmìna od pùvodního návrhu. Potøeboval jsem mít mo¾nost registrovat nìkoho jiného,
+	ne¾ jen zamìstnance restaurace - kvùli rezervaènímu systému. Také jsem potøeboval omezit pøístup
+	rùzným u¾ivatélùm na web.
 </p>
 <p>
 	<b>WWW/rezervace.php</b><br>
-	Rezervaèní systém restaurace. Rezervace mù¾e vytváøet registrovaný zákazník i zamìstnanec. Napøíklad kdy¾ nìkdo neregistrovaný
-	zavolá do restaurace. Zákazník mù¾e mít v jednu chvíli rezervovány maximálnì 3 stoly, aby nemohl zbyteènì blokovat restauraci.
-	Zamìstnanec nemá omezeno, kolik rezervací mù¾e vytvoøit. Zamìstnanec vytváøí rezervace v administrativní èásti aplikace.
+	Rezervaèní systém restaurace. Rezervace mù¾e vytváøet registrovaný zákazník i zamìstnanec. Napø. kdy¾ nìkdo neregistrovaný
+	zavolá do restaurace. Zákazník mù¾e mít v jednu chvíli rezervovány maximálnì 3 stoly - aby nemohl zbyteènì blokovat restaruaci.
+	Zamìstnanec namá omezeno, kolik rezervací mù¾e vytvoøit. Zamìstnanec vytváøí rezervace v administrativní èásti aplikace.
 </p>
 <p>
 	<b>WWW/admin/index.php</b><br>
@@ -91,24 +89,24 @@
 </p>
 <p>
 	<b>WWW/admin/jidlo.php</b><br>
-	Editace, vytváøení a odebírání pokrmù a surovin. Dále lze zde editovat poèty
-	prodaných potravin. Tato stránka se li¹í obsahem podle rùzných rolí u¾ivatelù. Lze ji
+	Editace a vytváøení nových jídel a surovin a jejich odebírání. Dále lze zde editovat poèty
+	prodaných potravin. Tato aplikace funguje skoro pod ka¾dým u¾ivatelem jinak. Lze ji
 	nav¹tívit se správcem systému, ¹éfkuchaøem, vedoucím, kuchaøem a standartním zamìstnancem.
 	Ka¾dý bude mít nastavená jiná oprávnìní v aplikaci.
 </p>
 <p>
 	<b>WWW/admin/odhlaseni.php</b><br>
-	Odhlá¹ení z aplikace.
+	Odhlá¹ení z aplikace
 </p>
 <p>
 	<b>WWW/admin/rezervace.php</b><br>
-	Rezervaèní systém pro zamìstnance, kde opìt hlídám oprávnìním. Lze ji nav¹tívit
+	Rezervaèní systém pro zamìstnance, opìt hlídám oprávnìním. Lze ji nav¹tívit
 	správcem systému, vedoucím a standartním u¾ivatelem.
 </p>
 <p>
 	<b>WWW/admin/uzivatele.php</b><br>
 	Pøehled a mazání u¾ivatelù, dále je zde mo¾nost prohlásit u¾ivatele za zamìstnance.
-	Opìt hlídáno oprávnìním. Pøístup má zde správce informaèního systému a vedoucí.
+	Opìt hlídáno oprávnìním. Pøístup má zde správce informaèního systému a vedoucí
 </p>
 <p>
 	<b>WWW/admin/zamestnanci.php</b><br>
@@ -127,15 +125,17 @@
 <h2>Instalace</h2>
 <ul>
 <li>Softwarové po¾adavky: MySQL 5.6.33, PHP 5.3.29  </li>
-<li>Pomocí mysql spus»te skript iis_restaurace.sql (nebo import pøes phpMyAdmin), skript vytvoøí tabulky a vyplní základní data.</li>
-<li>v souboru WWW/includes/db.php nastavte jméno a heslo do databáze na øádku 3.</li>
+<li>Pomocí mysql spus»te skript iis_restaurace.sql (nebo import pres phpMyAdmin), skript vytvoøí tabulky a vyplní základní data.</li>
+<li>v souboru WWW/includes/db.php nastavte jmeno a heslo do databaze na radku 3</li>
 </ul>
 
 <h2>Známé problémy</h2>
 <p>
 	Systém objednávek a úètenek nebyl implementován. A to z dùvodu, ¾e jsme se nechali unést implementací
 	na¹ich vlastních roz¹íøení, jako je napø. správa u¾ivatelù nebo oprávnìní a na úètenky a objednávky
-	nezbyl èas. Ale evidence, kolik kterého jídla se prodalo, je plnì funkèní (WWW/admin/jidlo.php)
+	nezbyl èas. Ale evidence kolik kterého jídla se prodalo je plnì funkèní (WWW/admin/jidlo.php)
 </p>
+
+
 
 </body></html>

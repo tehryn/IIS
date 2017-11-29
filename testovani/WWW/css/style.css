@@ -1,0 +1,304 @@
+body {
+    padding: 22px 10px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+    background: #eee url('https://i.imgur.com/eeQeRmk.png'); /* https://subtlepatterns.com/weave/ */
+}
+
+a {
+    text-decoration: none;
+}
+
+#wrapper {
+    /*display: block;*/
+    overflow: hidden;
+
+    max-width: 1250px;
+    min-width: 320px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 0;
+
+    background: #9EBAF1;
+    border-radius: 5px;
+    box-shadow: 2px 2px 3px -1px rgba(0,0,0,0.35);
+}
+
+h4 {
+    margin-bottom: 5px;
+}
+.ok {
+    background-color: #90ff6f;
+    color: #000;
+    border-radius: 5px;
+    padding: 5px;
+}
+.warning {
+    background-color: #FFF06F;
+    color: #000;
+    border-radius: 5px;
+    padding: 5px;
+}
+.error {
+    background-color: #FF7748;
+    color: #000;
+    border-radius: 5px;
+    padding: 5px;
+}
+/* ----- HEADER ----- */
+
+#header {
+    margin: 0px -20px;
+    padding: 0 10px;
+    background: #2D62CB;
+    border-radius: 5px 5px 0 0;
+}
+
+#header_box {
+    padding: 0 10px;
+}
+
+    #header_box #logo {
+        display: inline-block;
+        margin-right: 20px;
+    }
+        #header_box h1 {
+            margin: 0;
+
+        }
+        #header_box #logo a {
+            height: 90px;
+            width: 87px;
+            margin: 10px 0;
+            display: inline-block;
+            background-image: url(../pictures/company_logo.png);
+            background-size: contain;
+        }
+
+        #header_box #logo span {
+        	visibility: hidden;
+        }
+
+    #header_box h2 {
+        display: inline-block;
+        color: #001e77;
+    }
+
+#menu_wrapper {
+    clear: both;
+    padding: 10px;
+    margin: 0 -10px;
+    text-align: right;
+    background-color: #4D7CD8;
+}
+    #menu_wrapper a {
+        padding: 15px;
+        color: #001e77;
+    }
+    #menu_wrapper a:hover {
+        color: #fff;
+    }
+    #menu_wrapper .sep {
+        display: none;
+    }
+
+
+/* ----- LOGIN ----- */
+.login {
+    text-align: center;
+    display: inline-block;
+    float: right;
+    color: #001e77;
+    margin: 15px 0;
+}
+    .login table {
+        margin: 10px auto;
+        text-align: center;
+        display: inline-table;
+    }
+    .login input {
+        vertical-align: text-top;
+    }
+    .login .button, .login input[type="submit"] {
+        background-color: #4D7CD8;
+        color: #001e77;
+        margin-bottom: 0;
+    }
+    .login .button:hover, .login input[type="submit"]:hover {
+        background-color: #9EBAF1;
+        color: #001e77;
+    }
+    #userinfo .jmeno_prijmeni {
+        font-weight: 700;
+    }
+/* ----- TLACITKA ----- */
+button, .button, input[type="button"], input[type="submit"] {
+    display: inline-block;
+	padding: 10px 20px;
+	min-width: 100px;
+	line-height: 44px - 22px;
+	text-align: center;
+	font-size: 1.1rem;
+    margin-bottom: 20px;
+
+    color: #fff;
+    background: #4D7CD8;
+    border: 1px solid #2D62CB;
+    border-radius: 5px;
+}
+    button, .button, input[type="button"], input[type="submit"]:hover {
+        text-decoration: none;
+
+        color: #fff;
+        background: #2D62CB;
+        border-color: #2D62CB;
+    }
+
+/* ----- TABLES ----- */
+table {
+    margin-bottom: 10px;
+}
+
+td:first-child {
+    padding-right: 20px;
+}
+
+.food_menu table {
+    display: table;
+    margin: 0 20px;
+    width: 90%;
+}
+    .food_menu span {
+        display: block;
+        color: #363636;
+    }
+        .food_menu .jmeno_potraviny {
+            font-weight: 700;
+            color: #000;
+        }
+        .food_menu .alergeny_potraviny {
+            font-style: italic;
+        }
+    .food_menu td:last-child {
+        text-align: right;
+        white-space: nowrap;
+    }
+
+.rezervation td {
+    padding: 0;
+}
+    .rezervation td:first-child {
+        padding-right: 20px;
+    }
+
+
+.center {
+    text-align: center;
+}
+/* ----- UNIVERZALNI OHRANICENA TABULKA ----- */
+.ohranicena_tabulka {
+    display: block;
+    border-collapse: collapse;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+    .ohranicena_tabulka thead {
+        border: 1px solid black;
+        background-color: #4D7CD8;
+    }
+
+        .ohranicena_tabulka thead td {
+            border: 1px solid black;
+            font-weight: 700;
+            text-align: center;
+            padding: 10px;
+            height: 30px;
+        }
+        .ohranicena_tabulka thead th {
+            border: 1px solid black;
+            font-weight: 700;
+            text-align: center;
+            padding: 10px;
+            height: 30px;
+        }
+    .ohranicena_tabulka tbody tr {
+        background-color: #fff;
+    }
+    .ohranicena_tabulka tbody tr:nth-child(2n) {
+        background-color: rgb(217, 219, 255);
+    }
+    .ohranicena_tabulka tbody tr:hover {
+        background-color: rgb(103, 136, 251);
+    }
+    .ohranicena_tabulka td {
+        border: 1px solid black;
+        padding: 10px;
+    }
+    .ohranicena_tabulka a {
+        margin: 0 auto;
+    }
+        .ohranicena_tabulka a img {
+            width: 30px;
+            height: 30px;
+        }
+
+/* ----- UNIVERZALNI NEOHRANICENA TABULKA ----- */
+.neohranicena_tabulka table {
+    margin-bottom: 10px;
+}
+
+    .neohranicena_tabulka td:first-child {
+        padding-right: 20px;
+    }
+/* ----- INPUTY ----- */
+input:not([type='submit']) {
+    border-radius: 2px;
+    border: 1px solid #4D7CD8;
+    height: 20px;
+    padding: 3px;
+    margin: 5px;
+}
+
+    input:not([type='submit']):focus {
+        border: 1px solid #2D62CB;
+        box-shadow: 0 0 7px 0 rgba(31, 44, 217, 0.86);
+    }
+.required {
+    box-shadow: 0 0 1px 0 rgba(31, 44, 217, 0.86);
+    background-color: #fbee81;
+}
+
+/* ----- NO_DATA ----- */
+.no_data_in_table {
+    text-align: center;
+    font-style: italic;
+    color: #363636;
+}
+/* ----- MAPY ----- */
+#mapa {
+    float: right;
+    overflow: hidden;
+    margin: 20px 0;
+}
+#mapa_stredni {
+    display: block;
+}
+#mapa_mala {
+    display: none;
+}
+@media (max-width: 850px) {
+    #mapa {
+        float: left;
+    }
+}
+@media (max-width: 600px) {
+    #mapa_stredni {
+        display: none;
+    }
+    #mapa_mala {
+        display: block;
+    }
+}
+#kontakt {
+    float: left;
+}
